@@ -8,7 +8,7 @@
 
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>Hızlı Plaka Takip</title>
+    <title>Plaka Takip</title>
 
     <style>
 
@@ -104,7 +104,7 @@
 
         <label class="option-item"><input type="radio" name="fiyatTur" value="Sözleşmeli" onclick="toggle('fiyatOther', false)"> Sözleşmeli</label>
 
-        <label class="option-item"><input type="radio" name="fiyatTur" value="Serbest" onclick="toggle('fiyatOther', true)"> Serbest (Fiyat Gir)</label>
+        <label class="option-item"><input type="radio" name="fiyatTur" value="Serbest" onclick="toggle('fiyatOther', true)"> Serbest</label>
 
         <input type="number" id="fiyatOther" class="other-input" placeholder="Fiyat ₺">
 
@@ -123,6 +123,8 @@
         <label class="option-item"><input type="radio" name="sahis" value="Mehmet Şefik" onclick="toggle('sahisOther', false)"> Mehmet Şefik</label>
 
         <label class="option-item"><input type="radio" name="sahis" value="Özgür" onclick="toggle('sahisOther', false)"> Özgür</label>
+        
+        <label class="option-item"><input type="radio" name="sahis" value="Cüneyt" onclick="toggle('sahisOther', false)"> Cüneyt</label>
 
         <label class="option-item"><input type="radio" name="sahis" value="Diğer" onclick="toggle('sahisOther', true)"> Diğer</label>
 
@@ -134,17 +136,17 @@
 
     <div class="question-block">
 
-        <div class="question-title">🌾 TARLA VE NOT</div>
+        <div class="question-title">🌾 Tarla Biilgileri</div>
 
-        <input type="text" id="tarla" placeholder="Tarla adı" style="margin-bottom: 10px;">
+        <input type="text" id="tarla" placeholder="Tarla Adı" style="margin-bottom: 10px;">
 
-        <textarea id="aciklama" rows="2" placeholder="Notlar..."></textarea>
+        <textarea id="aciklama" rows="2" placeholder="Not..."></textarea>
 
     </div>
 
 
 
-    <button class="submit-btn" id="saveBtn" onclick="veriyiGonder()">KAYDET</button>
+    <button class="submit-btn" id="saveBtn" onclick="veriyiGonder()">Kaydet</button>
 
 </div>
 
@@ -264,7 +266,7 @@
 
         .then(() => {
 
-            alert("Kayıt başarıyla gönderildi.");
+            alert("Kayıt başarılı.");
 
             location.reload();
 
