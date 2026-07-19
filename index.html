@@ -1,146 +1,292 @@
 <!DOCTYPE html>
+
 <html lang="tr">
+
 <head>
+
     <meta charset="UTF-8">
+
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Plaka Takip</title>
+
+    <title>Hızlı Plaka Takip</title>
+
     <style>
+
         :root { --primary: #2563eb; --accent: #f59e0b; --bg: #f1f5f9; }
+
         body { font-family: 'Segoe UI', system-ui, sans-serif; background: var(--bg); margin: 0; padding: 15px; display: flex; justify-content: center; }
+
         .form-container { background: white; width: 100%; max-width: 450px; padding: 25px; border-radius: 20px; box-shadow: 0 10px 25px rgba(0,0,0,0.05); }
+
         h1 { color: #1e293b; font-size: 22px; text-align: center; margin-bottom: 20px; }
+
         .question-block { margin-bottom: 15px; padding: 12px; border-radius: 12px; background: #fafafa; border: 1px solid #eee; }
+
         .question-title { font-weight: 700; font-size: 13px; margin-bottom: 8px; color: #475569; }
+
         input, textarea { width: 100%; padding: 12px; border: 2px solid #e2e8f0; border-radius: 10px; font-size: 16px; box-sizing: border-box; }
+
         .option-item { display: flex; align-items: center; padding: 10px; margin-bottom: 5px; border: 1px solid #f1f5f9; border-radius: 8px; cursor: pointer; background: white; }
+
         input[type="radio"] { width: 18px; height: 18px; margin-right: 10px; accent-color: var(--primary); }
+
         .other-input { display: none; margin-top: 10px; border-style: dashed; background: #f0f7ff; }
+
         .submit-btn { background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%); color: white; border: none; padding: 18px; font-size: 18px; font-weight: 700; border-radius: 12px; cursor: pointer; width: 100%; margin-top: 10px; transition: 0.2s; }
+
         .submit-btn:active { transform: scale(0.98); opacity: 0.9; }
+
     </style>
+
 </head>
+
 <body>
 
+
+
 <div class="form-container">
+
     <h1>🚛 Plaka Kayıt</h1>
 
+
+
     <div class="question-block">
+
         <div class="question-title">📅 TARİH</div>
+
         <input type="date" id="tarih">
+
     </div>
 
+
+
     <div class="question-block">
+
         <div class="question-title">🔢 PLAKA</div>
+
         <input type="text" id="plaka" placeholder="34ABC123" style="text-transform:uppercase; font-weight:bold;">
+
     </div>
 
+
+
     <div class="question-block">
+
         <div class="question-title">🏭 FABRİKA</div>
+
         <label class="option-item"><input type="radio" name="fabrika" value="İpek" onclick="toggle('fabrikaOther', false)"> İpek</label>
+
         <label class="option-item"><input type="radio" name="fabrika" value="Tamek" onclick="toggle('fabrikaOther', false)"> Tamek</label>
+
         <label class="option-item"><input type="radio" name="fabrika" value="Assan" onclick="toggle('fabrikaOther', false)"> Assan</label>
+
         <label class="option-item"><input type="radio" name="fabrika" value="Diğer" onclick="toggle('fabrikaOther', true)"> Diğer</label>
+
         <input type="text" id="fabrikaOther" class="other-input" placeholder="Fabrika adı">
+
     </div>
 
+
+
     <div class="question-block">
+
         <div class="question-title">⚖️ KİLO</div>
+
         <input type="text" id="kilo" placeholder="Örn: 25.400">
+
     </div>
 
+
+
     <div class="question-block">
+
         <div class="question-title">💰 FİYAT</div>
+
         <label class="option-item"><input type="radio" name="fiyatTur" value="Sözleşmeli" onclick="toggle('fiyatOther', false)"> Sözleşmeli</label>
+
         <label class="option-item"><input type="radio" name="fiyatTur" value="Serbest" onclick="toggle('fiyatOther', true)"> Serbest (Fiyat Gir)</label>
+
         <input type="number" id="fiyatOther" class="other-input" placeholder="Fiyat ₺">
+
     </div>
 
+
+
     <div class="question-block">
+
         <div class="question-title">👤 ŞAHIS</div>
+
         <label class="option-item"><input type="radio" name="sahis" value="Cevabettin" onclick="toggle('sahisOther', false)"> Cevabettin</label>
+
         <label class="option-item"><input type="radio" name="sahis" value="Hikmet" onclick="toggle('sahisOther', false)"> Hikmet</label>
+
         <label class="option-item"><input type="radio" name="sahis" value="Mehmet Şefik" onclick="toggle('sahisOther', false)"> Mehmet Şefik</label>
+
         <label class="option-item"><input type="radio" name="sahis" value="Özgür" onclick="toggle('sahisOther', false)"> Özgür</label>
+
         <label class="option-item"><input type="radio" name="sahis" value="Diğer" onclick="toggle('sahisOther', true)"> Diğer</label>
+
         <input type="text" id="sahisOther" class="other-input" placeholder="Şahıs adı">
+
     </div>
+
+
 
     <div class="question-block">
-        <div class="question-title">🌾 Tarla Bilgileri</div>
-        <input type="text" id="tarla" placeholder="Tarla Adı" style="margin-bottom: 10px;">
-        <textarea id="aciklama" rows="2" placeholder="Not..."></textarea>
+
+        <div class="question-title">🌾 TARLA VE NOT</div>
+
+        <input type="text" id="tarla" placeholder="Tarla adı" style="margin-bottom: 10px;">
+
+        <textarea id="aciklama" rows="2" placeholder="Notlar..."></textarea>
+
     </div>
 
-    <button class="submit-btn" id="saveBtn" onclick="veriyiGonder()">Kaydet</button>
+
+
+    <button class="submit-btn" id="saveBtn" onclick="veriyiGonder()">KAYDET</button>
+
 </div>
 
+
+
 <script>
+
     const scriptURL = 'https://script.google.com/macros/s/AKfycbzWGK8GlNAjdpjvDI_3leNhW3cpzofCqgu4oCTFvHtnMYfFD18I0BTmdoYMpICoSiAxDg/exec';
 
+
+
     // DOĞRU TARİH AYARI (Yerel Saat)
+
     window.onload = function() {
+
         const tarihKutusu = document.getElementById('tarih');
+
         const simdi = new Date();
+
         const offset = simdi.getTimezoneOffset() * 60000; 
+
         const yerelZaman = new Date(simdi - offset).toISOString().split('T')[0];
+
         tarihKutusu.value = yerelZaman;
+
     };
+
+
 
     function toggle(id, s) { document.getElementById(id).style.display = s ? 'block' : 'none'; }
 
+
+
     function formatPlaka(p) {
+
         let t = p.replace(/\s+/g, '').toUpperCase();
+
         let m = t.match(/^(\d{2})([A-Z]{1,3})(\d{2,4})$/);
+
         return m ? m[1] + " " + m[2] + " " + m[3] : t;
+
     }
 
+
+
     function veriyiGonder() {
+
         const btn = document.getElementById('saveBtn');
+
         
+
         let f = document.querySelector('input[name="fabrika"]:checked')?.value;
+
         if(f === "Diğer") f = document.getElementById('fabrikaOther').value;
 
+
+
         let s = document.querySelector('input[name="sahis"]:checked')?.value;
+
         if(s === "Diğer") s = document.getElementById('sahisOther').value;
 
+
+
         const ft = document.querySelector('input[name="fiyatTur"]:checked')?.value;
+
         let fsn = ft === "Serbest" ? ft + ": " + document.getElementById('fiyatOther').value + " TL" : ft;
 
+
+
         const p = document.getElementById('plaka').value;
+
         
+
         // KİLO HATASI DÜZELTME (Nokta olsa da olmasa da çalışır)
+
         let kiloDegeri = document.getElementById('kilo').value;
+
         let temizKilo = kiloDegeri.toString().replace(/\./g, '').replace(/,/g, '');
+
+
 
         if(!f || !s || !ft || !p || !temizKilo) return alert("Eksik alan var! (Plaka, Fabrika ve Kilo zorunludur)");
 
+
+
         btn.disabled = true;
-        btn.innerText = "Kaydediliyor...";
+
+        btn.innerText = "KAYDEDİLİYOR...";
+
         btn.style.background = "#28a745";
 
+
+
         const veri = {
+
             tarih: document.getElementById('tarih').value.split('-').reverse().join('.'),
+
             ad: formatPlaka(p),
+
             miktar: s,
+
             turu: f,
+
             kilo: temizKilo,
+
             fiyat: fsn,
+
             toplam: document.getElementById('tarla').value,
+
             adet: document.getElementById('aciklama').value
+
         };
 
+
+
         fetch(scriptURL, { method: 'POST', mode: 'no-cors', body: JSON.stringify(veri) })
+
         .then(() => {
-            alert("Kayıt başarılı.");
+
+            alert("Kayıt başarıyla gönderildi.");
+
             location.reload();
+
         })
+
         .catch(() => {
+
             alert("Bir hata oluştu!");
+
             btn.disabled = false;
+
             btn.innerText = "KAYDET";
+
         });
+
     }
+
 </script>
 
+
+
 </body>
-</html>
+
+</html> 
+
