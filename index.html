@@ -235,26 +235,85 @@
             opacity: 0.9;
         }
 
-        /* Son Kayıt Durumu Kutusu */
+        /* MODERN İŞLEMCİ SON KAYIT KUTUSU */
         .status-box { 
-            margin-top: 14px; 
-            padding: 12px 14px; 
-            border-radius: 12px; 
-            font-size: 14px; 
+            margin-top: 18px; 
+            padding: 14px 16px; 
+            border-radius: 16px; 
             display: none; 
-            align-items: center; 
+            flex-direction: column;
             gap: 10px; 
             background: #ffffff;
             border: 1px solid #e2e8f0;
+            box-shadow: 0 4px 20px -2px rgba(0, 0, 0, 0.05);
+            transition: all 0.3s ease;
         }
-        .status-box.success { background: #f0fdf4; color: #166534; border-color: #bbf7d0; display: flex; }
-        .status-box.offline { background: #fffbeb; color: #92400e; border-color: #fde68a; display: flex; }
-        .status-icon { font-size: 18px; display: flex; align-items: center; justify-content: center; width: 32px; height: 32px; border-radius: 8px; flex-shrink: 0; }
-        .status-box.success .status-icon { background: #dcfce7; }
-        .status-box.offline .status-icon { background: #fef3c7; }
-        .status-content { flex: 1; display: flex; flex-direction: column; }
-        .status-label { font-size: 10px; text-transform: uppercase; letter-spacing: 0.5px; opacity: 0.75; font-weight: 700; }
-        .status-value { font-weight: 700; font-size: 13px; margin-top: 2px; }
+
+        .status-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            width: 100%;
+        }
+
+        .status-title-group {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .status-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background-color: #10b981;
+        }
+
+        .status-box.offline .status-dot {
+            background-color: #f59e0b;
+            animation: pulse 1.5s infinite;
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(245, 158, 11, 0.7); }
+            70% { transform: scale(1); box-shadow: 0 0 0 6px rgba(245, 158, 11, 0); }
+            100% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(245, 158, 11, 0); }
+        }
+
+        .status-label { 
+            font-size: 11px; 
+            text-transform: uppercase; 
+            letter-spacing: 0.6px; 
+            font-weight: 700;
+            color: #64748b;
+        }
+
+        .status-time {
+            font-size: 11px;
+            color: #94a3b8;
+            font-weight: 500;
+        }
+
+        .status-chips-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 6px;
+        }
+
+        .chip {
+            padding: 5px 10px;
+            border-radius: 8px;
+            font-size: 12px;
+            font-weight: 600;
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+        }
+
+        .chip-plaka { background: #eff6ff; color: #1d4ed8; border: 1px solid #bfdbfe; font-weight: 800; }
+        .chip-sahis { background: #f1f5f9; color: #334155; }
+        .chip-fabrika { background: #fdf4ff; color: #a21caf; }
+        .chip-kilo { background: #ecfdf5; color: #047857; }
 
         /* Anlık Bildirim (Toast) Kutusu */
         .toast-notification {
@@ -321,7 +380,7 @@
     <form id="mainForm" onsubmit="return false;">
         <div class="device-info-bar">
             <span>📱 Cihaz: <strong id="activeDeviceName">-</strong></span>
-            <button class="change-device-btn" type="button" onclick="cihazAdiniSifirla()">İsim Değiştir</button>
+            <button class="change-device-btn" type="button" onclick="cihazAdiniSifirla()">İsmi Değiştir</button>
         </div>
 
         <div class="app-title">
@@ -343,7 +402,7 @@
                     <input type="text" class="kilo-input" placeholder="Kilo (İsteğe bağlı)" style="flex: 1;" autocomplete="off">
                 </div>
             </div>
-            <button type="button" class="add-row-btn" onclick="satirEkle()">➕ Yeni Plaka Ekle</button>
+            <button type="button" class="add-row-btn" onclick="satirEkle()">➕ Başka Plaka Ekle</button>
         </div>
 
         <!-- FABRİKA -->
@@ -394,19 +453,24 @@
         <!-- KAYDET BUTONU -->
         <button class="btn-submit" type="button" id="saveBtn" onclick="cokluVeriGonder()">Kaydet</button>
 
-        <!-- SON KAYIT BİLGİSİ -->
+        <!-- MODERN SON KAYIT BİLGİSİ -->
         <div id="statusBox" class="status-box">
-            <div class="status-icon" id="statusIcon">📌</div>
-            <div class="status-content">
-                <span class="status-label" id="statusLabel">Son Kayıt</span>
-                <span class="status-value" id="statusValue">-</span>
+            <div class="status-header">
+                <div class="status-title-group">
+                    <span class="status-dot"></span>
+                    <span class="status-label" id="statusLabel">Son Kayıt</span>
+                </div>
+                <span class="status-time" id="statusTime">--:--</span>
+            </div>
+            <div class="status-chips-container" id="statusChips">
+                <!-- JavaScript Etiketleri Buraya Dolduracak -->
             </div>
         </div>
     </form>
 </div>
 
 <script>
-    const scriptURL = 'https://script.google.com/macros/s/AKfycbzxsZOIMAz5rTbm5Ski_MSmekCvGovvav9mP4XG2lU-K50sQsaCDcP6vHoQ9lhArzCynA/exec';
+    const scriptURL = 'https://script.google.com/macros/s/AKfycbwDFKbu-AMwp7C-RbtbikmRGibgYYydMi_PuKvgpqWGitxvtV-1b3S55r3zK43PBOgGWg/exec';
 
     window.onload = function() {
         const tarihKutusu = document.getElementById('tarih');
@@ -477,24 +541,37 @@
     }
 
     function sonKaydiGoster() {
-        const sonKayit = localStorage.getItem('sonPlakaKayit');
+        const rawData = localStorage.getItem('sonPlakaKayitObj');
         const statusBox = document.getElementById('statusBox');
-        const statusIcon = document.getElementById('statusIcon');
         const statusLabel = document.getElementById('statusLabel');
-        const statusValue = document.getElementById('statusValue');
+        const statusTime = document.getElementById('statusTime');
+        const statusChips = document.getElementById('statusChips');
 
-        if (sonKayit) {
-            if(sonKayit.includes('[ÇEVRİMDIŞI]')) {
+        if (rawData) {
+            const item = JSON.parse(rawData);
+            statusBox.style.display = 'flex';
+            
+            if(item.offline) {
                 statusBox.className = "status-box offline";
-                statusIcon.innerText = "⏳";
                 statusLabel.innerText = "Bekleyen Kayıt (Çevrimdışı)";
-                statusValue.innerText = sonKayit.replace(' [ÇEVRİMDIŞI]', '');
             } else {
-                statusBox.className = "status-box success";
-                statusIcon.innerText = "✅";
+                statusBox.className = "status-box";
                 statusLabel.innerText = "Son Kaydedilen";
-                statusValue.innerText = sonKayit;
             }
+
+            statusTime.innerText = item.saat || "";
+
+            let chipsHtml = `
+                <span class="chip chip-plaka">🚛 ${item.plaka}</span>
+                <span class="chip chip-sahis">👤 ${item.sahis}</span>
+                <span class="chip chip-fabrika">🏭 ${item.fabrika}</span>
+            `;
+
+            if (item.kilo) {
+                chipsHtml += `<span class="chip chip-kilo">⚖️ ${item.kilo} kg</span>`;
+            }
+
+            statusChips.innerHTML = chipsHtml;
         }
     }
 
@@ -509,8 +586,12 @@
             })
             .then(() => {
                 localStorage.removeItem('offlinePlakaKayitlari');
-                let son = localStorage.getItem('sonPlakaKayit') || '';
-                localStorage.setItem('sonPlakaKayit', son.replace(' [ÇEVRİMDIŞI]', ''));
+                const rawData = localStorage.getItem('sonPlakaKayitObj');
+                if (rawData) {
+                    let item = JSON.parse(rawData);
+                    item.offline = false;
+                    localStorage.setItem('sonPlakaKayitObj', JSON.stringify(item));
+                }
                 sonKaydiGoster();
             })
             .catch(err => console.error(err));
@@ -535,16 +616,14 @@
         const kiloInputs = document.querySelectorAll('.kilo-input');
 
         let kayitlar = [];
-        let sonKayitOzet = "";
+        let sonKayitObje = null;
 
         for (let i = 0; i < plakaInputs.length; i++) {
             let pVal = plakaInputs[i].value.trim();
             let rawKilo = kiloInputs[i].value.trim().replace(/\./g, '').replace(/,/g, '');
             
-            // Kilo girilmediyse boş string bırakır
             let kVal = rawKilo !== "" ? Number(rawKilo).toLocaleString('tr-TR') : "";
 
-            // Artık KİLO ZORUNLU DEĞİL — Sadece Plaka girilmiş olması yeterli!
             if (pVal) {
                 let fPlaka = formatPlaka(pVal);
                 kayitlar.push({
@@ -558,9 +637,15 @@
                     adet: document.getElementById('aciklama').value,
                     cihaz: cihazAdiVal
                 });
-                
-                let kiloOzet = kVal ? ` (${kVal} kg)` : "";
-                sonKayitOzet = `${fPlaka} • ${f} • ${s}${kiloOzet}`;
+
+                sonKayitObje = {
+                    plaka: fPlaka,
+                    sahis: s,
+                    fabrika: f,
+                    kilo: kVal,
+                    saat: new Date().toLocaleTimeString('tr-TR', { hour: '2-digit', minute: '2-digit' }),
+                    offline: !navigator.onLine
+                };
             }
         }
 
@@ -575,13 +660,14 @@
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify(kayitlar) 
             }).catch(err => console.error(err));
-
-            localStorage.setItem('sonPlakaKayit', sonKayitOzet);
         } else {
             let mevcutOffline = JSON.parse(localStorage.getItem('offlinePlakaKayitlari') || '[]');
             mevcutOffline.push(...kayitlar);
             localStorage.setItem('offlinePlakaKayitlari', JSON.stringify(mevcutOffline));
-            localStorage.setItem('sonPlakaKayit', `${sonKayitOzet} [ÇEVRİMDIŞI]`);
+        }
+
+        if (sonKayitObje) {
+            localStorage.setItem('sonPlakaKayitObj', JSON.stringify(sonKayitObje));
         }
 
         bildirimGoster("✅ Kaydedildi!");
