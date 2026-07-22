@@ -429,7 +429,7 @@
         <h2>📱 Cihaz Tanımlama</h2>
         <p>Ortak kayıtlarda kimin işlem yaptığı görülmesi için cihazınıza bir isim verin.</p>
         <input type="text" id="modalCihazInput" placeholder="Örn: Kantar 1, Feyzi Telefon">
-        <button class="modal-btn" onclick="cihazAdiniKaydet()">CİHAZI KAYDET VE BAŞLA</button>
+        <button class="modal-btn" onclick="cihazAdiniKaydet()">Cihazı Kaydet ve Başla</button>
     </div>
 </div>
 
@@ -451,23 +451,23 @@
     <div id="plakaTab" class="tab-content active">
         <form onsubmit="return false;">
             <div class="card">
-                <div class="card-title">📅 TARİH</div>
+                <div class="card-title">📅 Tarih</div>
                 <input type="date" id="tarih">
             </div>
 
             <div class="card">
-                <div class="card-title">🔢 PLAKA & ⚖️ KİLO</div>
+                <div class="card-title">🔢 Plaka & ⚖️ Kilo</div>
                 <div id="plakaKiloContainer">
                     <div class="plaka-kilo-row">
                         <input type="text" class="plaka-input" placeholder="34ABC123" style="text-transform:uppercase; font-weight:bold; flex: 1.2;" autocomplete="off">
                         <input type="text" class="kilo-input" placeholder="Kilo (İsteğe bağlı)" style="flex: 1;" autocomplete="off">
                     </div>
                 </div>
-                <button type="button" class="add-row-btn" onclick="satirEkle()">➕ Başka Plaka Ekle</button>
+                <button type="button" class="add-row-btn" onclick="satirEkle()">➕ Yeni Plaka Ekle</button>
             </div>
 
             <div class="card">
-                <div class="card-title">🏭 FABRİKA</div>
+                <div class="card-title">🏭 Fabrika</div>
                 <div class="radio-group">
                     <label class="radio-option"><input type="radio" name="fabrika" value="İpek" onclick="toggle('fabrikaOther', false)"> İpek</label>
                     <label class="radio-option"><input type="radio" name="fabrika" value="Tamek" onclick="toggle('fabrikaOther', false)"> Tamek</label>
@@ -478,7 +478,7 @@
             </div>
 
             <div class="card">
-                <div class="card-title">💰 FİYAT</div>
+                <div class="card-title">💰 Fiyat</div>
                 <div class="radio-group">
                     <label class="radio-option"><input type="radio" name="fiyatTur" value="Sözleşmeli" onclick="toggle('fiyatOther', false)"> Sözleşmeli</label>
                     <label class="radio-option"><input type="radio" name="fiyatTur" value="Serbest" onclick="toggle('fiyatOther', true)"> Serbest (Fiyat Gir)</label>
@@ -487,7 +487,7 @@
             </div>
 
             <div class="card">
-                <div class="card-title">👤 ŞAHIS</div>
+                <div class="card-title">👤 Şahıs </div>
                 <div class="radio-group">
                     <label class="radio-option"><input type="radio" name="sahis" value="Cevabettin" onclick="toggle('sahisOther', false)"> Cevabettin</label>
                     <label class="radio-option"><input type="radio" name="sahis" value="Hikmet" onclick="toggle('sahisOther', false)"> Hikmet</label>
@@ -500,7 +500,7 @@
             </div>
 
             <div class="card">
-                <div class="card-title">🌾 TARLA BİLGİLERİ</div>
+                <div class="card-title">🌾 Tarla Bilgileri</div>
                 <div class="field-inputs">
                     <input type="text" id="tarla" placeholder="Tarla Adı" autocomplete="off">
                     <textarea id="aciklama" rows="2" placeholder="Not..." autocomplete="off"></textarea>
@@ -524,7 +524,7 @@
     <div id="irsaliyeTab" class="tab-content">
         <form onsubmit="return false;">
             <div class="card">
-                <div class="card-title">📅 TARİH & PLAKA</div>
+                <div class="card-title">📅 Tarih & PLaka</div>
                 <div class="field-inputs">
                     <input type="date" id="ir_tarih">
                     <input type="text" id="ir_plaka" placeholder="Plaka (Örn: 34ABC123)" style="text-transform:uppercase; font-weight:bold;" autocomplete="off">
@@ -532,22 +532,22 @@
             </div>
 
             <div class="card">
-                <div class="card-title">👨‍✈️ ŞOFÖR BİLGİLERİ</div>
+                <div class="card-title">👨‍✈️ Şoför Bilgileri</div>
                 <div class="field-inputs">
                     <input type="text" id="ir_sofor" placeholder="Adı Soyadı" autocomplete="off">
                     
                     <input type="tel" id="ir_tel" placeholder="Telefon (5XX - XXX - XXXX)" inputmode="numeric" onfocus="formatTelInput(this)" oninput="formatTelInput(this)" autocomplete="off">
                     
                     <select id="ir_arac">
-                        <option value="Kamyon">On Tekel</option>
-                        <option value="Tır">Kırkayak</option>
-                        <option value="Traktör">Tır</option>
+                        <option value="On Tekel">On Tekel</option>
+                        <option value="Kırkayak">Kırkayak</option>
+                        <option value="Tır">Tır</option>
                     </select>
                 </div>
             </div>
 
             <div class="card">
-                <div class="card-title">🏭 FABRİKA</div>
+                <div class="card-title">🏭 Fabrika</div>
                 <div class="field-inputs">
                     <select id="ir_fabrikaSelect" onchange="fabrikaSecimKontrol('ir_fabrikaSelect', 'ir_fabrikaOther')">
                         <option value="" disabled selected>Fabrika Seçin...</option>
@@ -561,7 +561,7 @@
             </div>
 
             <div class="card">
-                <div class="card-title">👥 ŞAHIS & TARLA / NOT</div>
+                <div class="card-title">👥 Şahıs & Tarla Bilgileri</div>
                 <div class="field-inputs">
                     <input type="text" id="ir_sahis" placeholder="Şahıs Adı" autocomplete="off">
                     <input type="text" id="ir_tarla" placeholder="Tarla Adı / Not" autocomplete="off">
@@ -575,7 +575,7 @@
         <div class="live-list-card">
             <div class="live-list-header">
                 <span class="live-title">🔴 Canlı Ortak İrsaliyeler</span>
-                <button class="excel-btn" onclick="exportToCSV('irsaliyeler')">📥 Excel İndir</button>
+                <button class="excel-btn" onclick="exportToCSV('irsaliyeler')">📥 İndir</button>
             </div>
             <div id="irsaliyeLiveList">Veriler yükleniyor...</div>
         </div>
