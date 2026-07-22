@@ -157,10 +157,11 @@
 
         .radio-option input[type="radio"]:checked::after {
             content: "";
-            width: 10px;
-            height: 10px;
+            width: 100%;
+            height: 100%;
             background-color: #475569;
             border-radius: 50%;
+            transform: scale(0.5);
         }
 
         .other-input {
@@ -317,89 +318,91 @@
 </div>
 
 <div class="container">
-    <div class="device-info-bar">
-        <span>📱 Cihaz: <strong id="activeDeviceName">-</strong></span>
-        <button class="change-device-btn" onclick="cihazAdiniSifirla()">İsmi Değiştir</button>
-    </div>
+    <form id="mainForm" onsubmit="return false;">
+        <div class="device-info-bar">
+            <span>📱 Cihaz: <strong id="activeDeviceName">-</strong></span>
+            <button class="change-device-btn" type="button" onclick="cihazAdiniSifirla()">İsmi Değiştir</button>
+        </div>
 
-    <div class="app-title">
-        🚛 Plaka Kayıt
-    </div>
+        <div class="app-title">
+            🚛 Plaka Kayıt
+        </div>
 
-    <!-- TARİH -->
-    <div class="card">
-        <div class="card-title">📅 TARİH</div>
-        <input type="date" id="tarih">
-    </div>
+        <!-- TARİH -->
+        <div class="card">
+            <div class="card-title">📅 TARİH</div>
+            <input type="date" id="tarih">
+        </div>
 
-    <!-- PLAKA & KİLO -->
-    <div class="card">
-        <div class="card-title">🔢 PLAKA & ⚖️ KİLO</div>
-        <div id="plakaKiloContainer">
-            <div class="plaka-kilo-row">
-                <input type="text" class="plaka-input" placeholder="34ABC123" style="text-transform:uppercase; font-weight:bold; flex: 1.2;">
-                <input type="text" class="kilo-input" placeholder="Örn: 25.400" style="flex: 1;">
+        <!-- PLAKA & KİLO -->
+        <div class="card">
+            <div class="card-title">🔢 PLAKA & ⚖️ KİLO</div>
+            <div id="plakaKiloContainer">
+                <div class="plaka-kilo-row">
+                    <input type="text" class="plaka-input" placeholder="34ABC123" style="text-transform:uppercase; font-weight:bold; flex: 1.2;" autocomplete="off">
+                    <input type="text" class="kilo-input" placeholder="Örn: 25.400" style="flex: 1;" autocomplete="off">
+                </div>
+            </div>
+            <button type="button" class="add-row-btn" onclick="satirEkle()">➕ Başka Plaka Ekle</button>
+        </div>
+
+        <!-- FABRİKA -->
+        <div class="card">
+            <div class="card-title">🏭 FABRİKA</div>
+            <div class="radio-group">
+                <label class="radio-option"><input type="radio" name="fabrika" value="İpek" onclick="toggle('fabrikaOther', false)"> İpek</label>
+                <label class="radio-option"><input type="radio" name="fabrika" value="Tamek" onclick="toggle('fabrikaOther', false)"> Tamek</label>
+                <label class="radio-option"><input type="radio" name="fabrika" value="Assan" onclick="toggle('fabrikaOther', false)"> Assan</label>
+                <label class="radio-option"><input type="radio" name="fabrika" value="Diğer" onclick="toggle('fabrikaOther', true)"> Diğer</label>
+                <input type="text" id="fabrikaOther" class="other-input" placeholder="Fabrika adı" autocomplete="off">
             </div>
         </div>
-        <button type="button" class="add-row-btn" onclick="satirEkle()">➕ Başka Plaka Ekle</button>
-    </div>
 
-    <!-- FABRİKA -->
-    <div class="card">
-        <div class="card-title">🏭 FABRİKA</div>
-        <div class="radio-group">
-            <label class="radio-option"><input type="radio" name="fabrika" value="İpek" onclick="toggle('fabrikaOther', false)"> İpek</label>
-            <label class="radio-option"><input type="radio" name="fabrika" value="Tamek" onclick="toggle('fabrikaOther', false)"> Tamek</label>
-            <label class="radio-option"><input type="radio" name="fabrika" value="Assan" onclick="toggle('fabrikaOther', false)"> Assan</label>
-            <label class="radio-option"><input type="radio" name="fabrika" value="Diğer" onclick="toggle('fabrikaOther', true)"> Diğer</label>
-            <input type="text" id="fabrikaOther" class="other-input" placeholder="Fabrika adı">
+        <!-- FİYAT -->
+        <div class="card">
+            <div class="card-title">💰 FİYAT</div>
+            <div class="radio-group">
+                <label class="radio-option"><input type="radio" name="fiyatTur" value="Sözleşmeli" onclick="toggle('fiyatOther', false)"> Sözleşmeli</label>
+                <label class="radio-option"><input type="radio" name="fiyatTur" value="Serbest" onclick="toggle('fiyatOther', true)"> Serbest (Fiyat Gir)</label>
+                <input type="text" id="fiyatOther" class="other-input" placeholder="Fiyat ₺ (Örn: 4.20)" autocomplete="off">
+            </div>
         </div>
-    </div>
 
-    <!-- FİYAT -->
-    <div class="card">
-        <div class="card-title">💰 FİYAT</div>
-        <div class="radio-group">
-            <label class="radio-option"><input type="radio" name="fiyatTur" value="Sözleşmeli" onclick="toggle('fiyatOther', false)"> Sözleşmeli</label>
-            <label class="radio-option"><input type="radio" name="fiyatTur" value="Serbest" onclick="toggle('fiyatOther', true)"> Serbest (Fiyat Gir)</label>
-            <input type="text" id="fiyatOther" class="other-input" placeholder="Fiyat ₺ (Örn: 4.20)">
+        <!-- ŞAHIS -->
+        <div class="card">
+            <div class="card-title">👤 ŞAHIS</div>
+            <div class="radio-group">
+                <label class="radio-option"><input type="radio" name="sahis" value="Cevabettin" onclick="toggle('sahisOther', false)"> Cevabettin</label>
+                <label class="radio-option"><input type="radio" name="sahis" value="Hikmet" onclick="toggle('sahisOther', false)"> Hikmet</label>
+                <label class="radio-option"><input type="radio" name="sahis" value="Mehmet Şefik" onclick="toggle('sahisOther', false)"> Mehmet Şefik</label>
+                <label class="radio-option"><input type="radio" name="sahis" value="Özgür" onclick="toggle('sahisOther', false)"> Özgür</label>
+                <label class="radio-option"><input type="radio" name="sahis" value="Cüneyt" onclick="toggle('sahisOther', false)"> Cüneyt</label>
+                <label class="radio-option"><input type="radio" name="sahis" value="Diğer" onclick="toggle('sahisOther', true)"> Diğer</label>
+                <input type="text" id="sahisOther" class="other-input" placeholder="Şahıs adı" autocomplete="off">
+            </div>
         </div>
-    </div>
 
-    <!-- ŞAHIS -->
-    <div class="card">
-        <div class="card-title">👤 ŞAHIS</div>
-        <div class="radio-group">
-            <label class="radio-option"><input type="radio" name="sahis" value="Cevabettin" onclick="toggle('sahisOther', false)"> Cevabettin</label>
-            <label class="radio-option"><input type="radio" name="sahis" value="Hikmet" onclick="toggle('sahisOther', false)"> Hikmet</label>
-            <label class="radio-option"><input type="radio" name="sahis" value="Mehmet Şefik" onclick="toggle('sahisOther', false)"> Mehmet Şefik</label>
-            <label class="radio-option"><input type="radio" name="sahis" value="Özgür" onclick="toggle('sahisOther', false)"> Özgür</label>
-            <label class="radio-option"><input type="radio" name="sahis" value="Cüneyt" onclick="toggle('sahisOther', false)"> Cüneyt</label>
-            <label class="radio-option"><input type="radio" name="sahis" value="Diğer" onclick="toggle('sahisOther', true)"> Diğer</label>
-            <input type="text" id="sahisOther" class="other-input" placeholder="Şahıs adı">
+        <!-- TARLA BİLGİLERİ -->
+        <div class="card">
+            <div class="card-title">🌾 TARLA BİLGİLERİ</div>
+            <div class="field-inputs">
+                <input type="text" id="tarla" placeholder="Tarla Adı" autocomplete="off">
+                <textarea id="aciklama" rows="2" placeholder="Not..." autocomplete="off"></textarea>
+            </div>
         </div>
-    </div>
 
-    <!-- TARLA BİLGİLERİ -->
-    <div class="card">
-        <div class="card-title">🌾 TARLA BİLGİLERİ</div>
-        <div class="field-inputs">
-            <input type="text" id="tarla" placeholder="Tarla Adı">
-            <textarea id="aciklama" rows="2" placeholder="Not..."></textarea>
+        <!-- KAYDET BUTONU -->
+        <button class="btn-submit" type="button" id="saveBtn" onclick="cokluVeriGonder()">Kaydet</button>
+
+        <!-- SON KAYIT BİLGİSİ -->
+        <div id="statusBox" class="status-box">
+            <div class="status-icon" id="statusIcon">📌</div>
+            <div class="status-content">
+                <span class="status-label" id="statusLabel">Son Kayıt</span>
+                <span class="status-value" id="statusValue">-</span>
+            </div>
         </div>
-    </div>
-
-    <!-- KAYDET BUTONU -->
-    <button class="btn-submit" id="saveBtn" onclick="cokluVeriGonder()">Kaydet</button>
-
-    <!-- SON KAYIT BİLGİSİ -->
-    <div id="statusBox" class="status-box">
-        <div class="status-icon" id="statusIcon">📌</div>
-        <div class="status-content">
-            <span class="status-label" id="statusLabel">Son Kayıt</span>
-            <span class="status-value" id="statusValue">-</span>
-        </div>
-    </div>
+    </form>
 </div>
 
 <script>
@@ -457,8 +460,8 @@
         const newRow = document.createElement('div');
         newRow.className = 'plaka-kilo-row';
         newRow.innerHTML = `
-            <input type="text" class="plaka-input" placeholder="Plaka" style="text-transform:uppercase; font-weight:bold; flex: 1.2;">
-            <input type="text" class="kilo-input" placeholder="Kilo" style="flex: 1;">
+            <input type="text" class="plaka-input" placeholder="Plaka" style="text-transform:uppercase; font-weight:bold; flex: 1.2;" autocomplete="off">
+            <input type="text" class="kilo-input" placeholder="Kilo" style="flex: 1;" autocomplete="off">
             <button type="button" class="remove-btn" onclick="this.parentElement.remove()">✕</button>
         `;
         container.appendChild(newRow);
@@ -470,7 +473,7 @@
         toast.classList.add('show');
         setTimeout(() => {
             toast.classList.remove('show');
-        }, 500); // 0.5 saniyede hızlıca kaybolur
+        }, 500);
     }
 
     function sonKaydiGoster() {
@@ -559,7 +562,6 @@
             return alert("Lütfen en az bir tane geçerli Plaka ve Kilo girin!");
         }
 
-        // Arka planda Google'a gönder
         if (navigator.onLine) {
             fetch(scriptURL, { 
                 method: 'POST', 
@@ -576,28 +578,47 @@
             localStorage.setItem('sonPlakaKayit', `${sonKayitOzet} [ÇEVRİMDIŞI]`);
         }
 
-        // Anında şimşek hızında bildirim ve temizlik
         bildirimGoster("✅ Kaydedildi!");
         formuTemizle();
         sonKaydiGoster();
     }
 
     function formuTemizle() {
-        const container = document.getElementById('plakaKiloContainer');
-        container.innerHTML = `
-            <div class="plaka-kilo-row">
-                <input type="text" class="plaka-input" placeholder="34ABC123" style="text-transform:uppercase; font-weight:bold; flex: 1.2;">
-                <input type="text" class="kilo-input" placeholder="Örn: 25.400" style="flex: 1;">
-            </div>
-        `;
+        // 1. Tüm Radio Butonların Seçimini Kaldır
+        const radios = document.querySelectorAll('input[type="radio"]');
+        radios.forEach(radio => {
+            radio.checked = false;
+        });
 
+        // 2. Gizli 'Diğer' Kutularını Temizle ve Gizle
+        ['fabrikaOther', 'fiyatOther', 'sahisOther'].forEach(id => {
+            const el = document.getElementById(id);
+            if (el) {
+                el.value = '';
+                el.style.display = 'none';
+            }
+        });
+
+        // 3. Tarla ve Açıklama Alanlarını Temizle
         document.getElementById('tarla').value = '';
         document.getElementById('aciklama').value = '';
 
+        // 4. Plaka & Kilo Konteynerini Sıfırla ve Tek Satıra Düşür
+        const container = document.getElementById('plakaKiloContainer');
+        container.innerHTML = `
+            <div class="plaka-kilo-row">
+                <input type="text" class="plaka-input" placeholder="34ABC123" style="text-transform:uppercase; font-weight:bold; flex: 1.2;" autocomplete="off">
+                <input type="text" class="kilo-input" placeholder="Örn: 25.400" style="flex: 1;" autocomplete="off">
+            </div>
+        `;
+
+        // 5. Mobil Klavyeyi ve Odaklanmayı Düzenle
         setTimeout(() => {
             const ilkinput = document.querySelector('.plaka-input');
-            if (ilkinput) ilkinput.focus();
-        }, 30);
+            if (ilkinput) {
+                ilkinput.focus();
+            }
+        }, 50);
     }
 </script>
 
