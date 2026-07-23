@@ -102,7 +102,7 @@
         }
 
         .card-title {
-            font-size: 17px;
+            font-size: 15px;
             font-weight: 800;
             color: #334155;
             letter-spacing: 0.3px;
@@ -461,7 +461,7 @@
 
     <!-- ÜST SEKME MENÜSÜ -->
     <div class="tab-bar">
-        <button class="tab-btn active" type="button" onclick="openTab('plakaTab', this)">🚛 Plaka Kayıt</button>
+        <button class="tab-btn active" type="button" onclick="openTab('plakaTab', this)">🚛 Plaka</button>
         <button class="tab-btn" type="button" onclick="openTab('irsaliyeTab', this)">📄 İrsaliye</button>
     </div>
 
@@ -481,25 +481,31 @@
                         <input type="text" class="kilo-input" placeholder="Kilo (İsteğe bağlı)" style="flex: 1;" autocomplete="off">
                     </div>
                 </div>
-                <button type="button" class="add-row-btn" onclick="satirEkle()">➕ Yeni Plaka Ekle</button>
+                <button type="button" class="add-row-btn" onclick="satirEkle()">➕ Plaka Ekle</button>
             </div>
 
             <div class="card">
                 <div class="card-title">🏭 Fabrika</div>
-                <div class="radio-group">
-                    <label class="radio-option"><input type="radio" name="fabrika" value="İpek" onclick="toggle('fabrikaOther', false)"> İpek</label>
-                    <label class="radio-option"><input type="radio" name="fabrika" value="Tamek" onclick="toggle('fabrikaOther', false)"> Tamek</label>
-                    <label class="radio-option"><input type="radio" name="fabrika" value="Assan" onclick="toggle('fabrikaOther', false)"> Assan</label>
-                    <label class="radio-option"><input type="radio" name="fabrika" value="Diğer" onclick="toggle('fabrikaOther', true)"> Diğer</label>
+                <div class="field-inputs">
+                    <div class="radio-group radio-group-row">
+                        <label class="radio-option"><input type="radio" name="fabrika" value="İpek" onclick="toggle('fabrikaOther', false)"> İpek</label>
+                        <label class="radio-option"><input type="radio" name="fabrika" value="Tamek" onclick="toggle('fabrikaOther', false)"> Tamek</label>
+                    </div>
+                    <div class="radio-group radio-group-row" style="margin-top: 4px;">
+                        <label class="radio-option"><input type="radio" name="fabrika" value="Assan" onclick="toggle('fabrikaOther', false)"> Assan</label>
+                        <label class="radio-option"><input type="radio" name="fabrika" value="Diğer" onclick="toggle('fabrikaOther', true)"> Diğer</label>
+                    </div>
                     <input type="text" id="fabrikaOther" class="other-input" placeholder="Fabrika adını yazın..." autocomplete="off">
                 </div>
             </div>
 
             <div class="card">
                 <div class="card-title">💰 Fiyat</div>
-                <div class="radio-group">
-                    <label class="radio-option"><input type="radio" name="fiyatTur" value="Sözleşmeli" onclick="toggle('fiyatOther', false)"> Sözleşmeli</label>
-                    <label class="radio-option"><input type="radio" name="fiyatTur" value="Serbest" onclick="toggle('fiyatOther', true)"> Serbest (Fiyat Gir)</label>
+                <div class="field-inputs">
+                    <div class="radio-group radio-group-row">
+                        <label class="radio-option"><input type="radio" name="fiyatTur" value="Sözleşmeli" onclick="toggle('fiyatOther', false)"> Sözleşmeli</label>
+                        <label class="radio-option"><input type="radio" name="fiyatTur" value="Serbest" onclick="toggle('fiyatOther', true)"> Serbest</label>
+                    </div>
                     <input type="text" id="fiyatOther" class="other-input" placeholder="Fiyat ₺ (Örn: 4.20)" autocomplete="off">
                 </div>
             </div>
@@ -534,7 +540,7 @@
                 <span class="live-title">🔴 Canlı Ortak Plaka Kayıtları</span>
                 <button class="excel-btn" onclick="exportToCSV('plakalar')">📥 İndir</button>
             </div>
-            <div id="plakaLiveList">Veriler yükleniyor...</div>
+            <div id="plakaLiveList">İnternet bağlantısı bekleniyor...</div>
         </div>
     </div>
 
@@ -564,50 +570,54 @@
                 </div>
             </div>
 
+            <!-- FABRİKA (YAN YANA SEÇENEKLİ) -->
             <div class="card">
                 <div class="card-title">🏭 Fabrika</div>
                 <div class="field-inputs">
-                    <select id="ir_fabrikaSelect" onchange="fabrikaSecimKontrol('ir_fabrikaSelect', 'ir_fabrikaOther')">
-                        <option value="" disabled selected>Fabrika Seçin...</option>
-                        <option value="İpek">İpek</option>
-                        <option value="Tamek">Tamek</option>
-                        <option value="Assan">Assan</option>
-                        <option value="Diğer">Diğer</option>
-                    </select>
+                    <div class="radio-group radio-group-row">
+                        <label class="radio-option"><input type="radio" name="ir_fabrika" value="İpek" onclick="toggle('ir_fabrikaOther', false)"> İpek</label>
+                        <label class="radio-option"><input type="radio" name="ir_fabrika" value="Tamek" onclick="toggle('ir_fabrikaOther', false)"> Tamek</label>
+                    </div>
+                    <div class="radio-group radio-group-row" style="margin-top: 4px;">
+                        <label class="radio-option"><input type="radio" name="ir_fabrika" value="Assan" onclick="toggle('ir_fabrikaOther', false)"> Assan</label>
+                        <label class="radio-option"><input type="radio" name="ir_fabrika" value="Diğer" onclick="toggle('ir_fabrikaOther', true)"> Diğer</label>
+                    </div>
                     <input type="text" id="ir_fabrikaOther" class="other-input" placeholder="Fabrika adını yazın..." autocomplete="off">
                 </div>
             </div>
 
             <!-- FİYAT TÜRÜ (SÖZLEŞMELİ / SERBEST) - YAN YANA -->
             <div class="card">
-                <div class="card-title">💰 Fiyat Türü</div>
+                <div class="card-title">💰 Fiyat</div>
                 <div class="radio-group radio-group-row">
                     <label class="radio-option"><input type="radio" name="ir_fiyatTur" value="Sözleşmeli"> Sözleşmeli</label>
                     <label class="radio-option"><input type="radio" name="ir_fiyatTur" value="Serbest"> Serbest</label>
                 </div>
             </div>
 
+            <!-- ŞAHIS (YAN YANA SEÇENEKLİ) -->
             <div class="card">
-                <div class="card-title">👥 Şahıs</div>
+                <div class="card-title">👤 Şahıs</div>
                 <div class="field-inputs">
-                    <select id="ir_sahisSelect" onchange="fabrikaSecimKontrol('ir_sahisSelect', 'ir_sahisOther')">
-                        <option value="" disabled selected>Şahıs Seçin...</option>
-                        <option value="Cevabettin">Cevabettin</option>
-                        <option value="Cüneyt">Cüneyt</option>
-                        <option value="Diğer">Diğer</option>
-                    </select>
+                    <div class="radio-group radio-group-row">
+                        <label class="radio-option"><input type="radio" name="ir_sahis" value="Cevabettin" onclick="toggle('ir_sahisOther', false)"> Cevabettin</label>
+                        <label class="radio-option"><input type="radio" name="ir_sahis" value="Cüneyt" onclick="toggle('ir_sahisOther', false)"> Cüneyt</label>
+                    </div>
+                    <div class="radio-group radio-group-row" style="margin-top: 4px;">
+                        <label class="radio-option"><input type="radio" name="ir_sahis" value="Diğer" onclick="toggle('ir_sahisOther', true)"> Diğer</label>
+                    </div>
                     <input type="text" id="ir_sahisOther" class="other-input" placeholder="Şahıs adı yazın..." autocomplete="off">
                 </div>
             </div>
 
             <div class="card">
-                <div class="card-title">🌾 Tarla / Not</div>
+                <div class="card-title">🌾 Tarla Bilgileri</div>
                 <div class="field-inputs">
                     <input type="text" id="ir_tarla" placeholder="Tarla Adı / Not" autocomplete="off">
                 </div>
             </div>
 
-            <button class="btn-submit btn-blue" type="button" onclick="irsaliyeKaydetFirebase()">İrsaliye Kaydet</button>
+            <button class="btn-submit btn-blue" type="button" onclick="irsaliyeKaydetFirebase()">Kaydet</button>
         </form>
 
         <!-- ORTAK İRSALİYE LİSTESİ -->
@@ -616,7 +626,7 @@
                 <span class="live-title">🔴 Canlı Ortak İrsaliyeler</span>
                 <button class="excel-btn" onclick="exportToCSV('irsaliyeler')">📥 İndir</button>
             </div>
-            <div id="irsaliyeLiveList">Veriler yükleniyor...</div>
+            <div id="irsaliyeLiveList">İnternet bağlantısı bekleniyor...</div>
         </div>
     </div>
 
@@ -645,6 +655,8 @@
     let tumIrsaliyeKayitlari = [];
 
     window.onload = function() {
+        window.scrollTo(0, 0); // Sayfa açıldığında en üste konumlandır
+        
         const simdi = new Date();
         const offset = simdi.getTimezoneOffset() * 60000; 
         const yerelZaman = new Date(simdi - offset).toISOString().split('T')[0];
@@ -689,18 +701,6 @@
     }
 
     function toggle(id, s) { document.getElementById(id).style.display = s ? 'block' : 'none'; }
-
-    function fabrikaSecimKontrol(selectId, inputId) {
-        const selVal = document.getElementById(selectId).value;
-        const inputEl = document.getElementById(inputId);
-        if (selVal === "Diğer") {
-            inputEl.style.display = 'block';
-            inputEl.focus();
-        } else {
-            inputEl.style.display = 'none';
-            inputEl.value = '';
-        }
-    }
 
     function formatPlaka(p) {
         let t = p.replace(/\s+/g, '').toUpperCase();
@@ -755,6 +755,7 @@
         let fsn = ft === "Serbest" ? document.getElementById('fiyatOther').value.toString().replace(/,/g, '.') : ft;
 
         if(!f || !s || !ft) return alert("Lütfen Fabrika, Fiyat ve Şahıs seçimini yapın!");
+        if(ft === "Serbest" && !fsn) return alert("Lütfen serbest fiyat değerini girin!");
 
         const plakaInputs = document.querySelectorAll('.plaka-input');
         const kiloInputs = document.querySelectorAll('.kilo-input');
@@ -811,7 +812,7 @@
 
         if (!eklendi) return alert("Lütfen en az bir Plaka girin!");
 
-        bildirimGoster("✅ Plaka ve Excel Kaydedildi!");
+        bildirimGoster("✅ Plaka Kaydedildi!");
         formuTemizle();
     }
 
@@ -820,16 +821,16 @@
         const cihazAdiVal = localStorage.getItem('cihazAdi') || 'Bilinmeyen Cihaz';
         const plaka = document.getElementById('ir_plaka').value.trim();
 
-        let ir_f = document.getElementById('ir_fabrikaSelect').value;
+        let ir_f = document.querySelector('input[name="ir_fabrika"]:checked')?.value;
         if(ir_f === "Diğer") ir_f = document.getElementById('ir_fabrikaOther').value.trim();
 
-        let ir_s = document.getElementById('ir_sahisSelect').value;
+        let ir_s = document.querySelector('input[name="ir_sahis"]:checked')?.value;
         if(ir_s === "Diğer") ir_s = document.getElementById('ir_sahisOther').value.trim();
 
         let ir_ft = document.querySelector('input[name="ir_fiyatTur"]:checked')?.value || '-';
         let ir_aracVal = document.querySelector('input[name="ir_arac"]:checked')?.value || 'On Tekel';
 
-        if (!plaka || !ir_f || !ir_s) return alert("Lütfen Plaka, Fabrika ve Şahıs alanlarını doldurun/seçin!");
+        if (!plaka || !ir_f || !ir_s) return alert("Plaka, Fabrika ve Şahıs alanlarını doldurun/seçin!");
 
         const fPlaka = formatPlaka(plaka);
 
@@ -857,11 +858,12 @@
         document.getElementById('ir_plaka').value = '';
         document.getElementById('ir_sofor').value = '';
         document.getElementById('ir_tel').value = '';
-        document.getElementById('ir_fabrikaSelect').selectedIndex = 0;
+        
+        document.querySelectorAll('input[name="ir_fabrika"]').forEach(r => r.checked = false);
         document.getElementById('ir_fabrikaOther').value = '';
         document.getElementById('ir_fabrikaOther').style.display = 'none';
         
-        document.getElementById('ir_sahisSelect').selectedIndex = 0;
+        document.querySelectorAll('input[name="ir_sahis"]').forEach(r => r.checked = false);
         document.getElementById('ir_sahisOther').value = '';
         document.getElementById('ir_sahisOther').style.display = 'none';
         
