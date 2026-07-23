@@ -3,6 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+    <meta http-equiv="Pragma" content="no-cache">
+    <meta http-equiv="Expires" content="0">
     <title>Plaka Kayıt & İrsaliye</title>
     <!-- Firebase SDK (Compat) -->
     <script src="https://www.gstatic.com/firebasejs/9.22.1/firebase-app-compat.js"></script>
@@ -99,10 +102,9 @@
         }
 
         .card-title {
-            font-size: 12px;
+            font-size: 15px;
             font-weight: 700;
             color: #475569;
-            text-transform: uppercase;
             letter-spacing: 0.5px;
             margin-bottom: 10px;
             display: flex;
@@ -438,12 +440,12 @@
     <!-- CİHAZ BİLGİ ÇUBUĞU (EN ÜSTTE) -->
     <div class="device-info-bar">
         <span>📱 Cihaz: <strong id="activeDeviceName">-</strong></span>
-        <button class="change-device-btn" type="button" onclick="cihazAdiniSifirla()">İsmi Değiştir</button>
+        <button class="change-device-btn" type="button" onclick="cihazAdiniSifirla()">İsim Değiştir</button>
     </div>
 
     <!-- ÜST SEKME MENÜSÜ -->
     <div class="tab-bar">
-        <button class="tab-btn active" type="button" onclick="openTab('plakaTab', this)">🚛 Plaka Kayıt</button>
+        <button class="tab-btn active" type="button" onclick="openTab('plakaTab', this)">🚛 Plaka Girişi</button>
         <button class="tab-btn" type="button" onclick="openTab('irsaliyeTab', this)">📄 İrsaliye</button>
     </div>
 
@@ -456,7 +458,7 @@
             </div>
 
             <div class="card">
-                <div class="card-title">🔢 Plaka & ⚖️ Kilo</div>
+                <div class="card-title">🔢 Plaka & Kilo</div>
                 <div id="plakaKiloContainer">
                     <div class="plaka-kilo-row">
                         <input type="text" class="plaka-input" placeholder="34ABC123" style="text-transform:uppercase; font-weight:bold; flex: 1.2;" autocomplete="off">
@@ -487,7 +489,7 @@
             </div>
 
             <div class="card">
-                <div class="card-title">👤 Şahıs </div>
+                <div class="card-title">👤 Şahıs</div>
                 <div class="radio-group">
                     <label class="radio-option"><input type="radio" name="sahis" value="Cevabettin" onclick="toggle('sahisOther', false)"> Cevabettin</label>
                     <label class="radio-option"><input type="radio" name="sahis" value="Hikmet" onclick="toggle('sahisOther', false)"> Hikmet</label>
@@ -514,9 +516,9 @@
         <div class="live-list-card">
             <div class="live-list-header">
                 <span class="live-title">🔴 Canlı Ortak Plaka Kayıtları</span>
-                <button class="excel-btn" onclick="exportToCSV('plakalar')">📥 Excel İndir</button>
+                <button class="excel-btn" onclick="exportToCSV('plakalar')">📥 İndir</button>
             </div>
-            <div id="plakaLiveList">Veriler yükleniyor...</div>
+            <div id="plakaLiveList">İnternet bağlantısı bekleniyor...</div>
         </div>
     </div>
 
@@ -524,7 +526,7 @@
     <div id="irsaliyeTab" class="tab-content">
         <form onsubmit="return false;">
             <div class="card">
-                <div class="card-title">📅 Tarih & PLaka</div>
+                <div class="card-title">📅 Tarih & Plaka</div>
                 <div class="field-inputs">
                     <input type="date" id="ir_tarih">
                     <input type="text" id="ir_plaka" placeholder="Plaka (Örn: 34ABC123)" style="text-transform:uppercase; font-weight:bold;" autocomplete="off">
@@ -561,14 +563,26 @@
             </div>
 
             <div class="card">
-                <div class="card-title">👥 Şahıs & Tarla Bilgileri</div>
+                <div class="card-title">👥 Şahıs</div>
                 <div class="field-inputs">
-                    <input type="text" id="ir_sahis" placeholder="Şahıs Adı" autocomplete="off">
+                    <select id="ir_sahisSelect" onchange="fabrikaSecimKontrol('ir_sahisSelect', 'ir_sahisOther')">
+                        <option value="" disabled selected>Şahıs Seçin...</option>
+                        <option value="Cevabettin">Cevabettin</option>
+                        <option value="Cüneyt">Cüneyt</option>
+                        <option value="Diğer">Diğer</option>
+                    </select>
+                    <input type="text" id="ir_sahisOther" class="other-input" placeholder="Şahıs adı yazın..." autocomplete="off">
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="card-title">🌾 Tarla / Not</div>
+                <div class="field-inputs">
                     <input type="text" id="ir_tarla" placeholder="Tarla Adı / Not" autocomplete="off">
                 </div>
             </div>
 
-            <button class="btn-submit btn-blue" type="button" onclick="irsaliyeKaydetFirebase()">Kaydet</button>
+            <button class="btn-submit btn-blue" type="button" onclick="irsaliyeKaydetFirebase()">İrsaliye Kaydet</button>
         </form>
 
         <!-- ORTAK İRSALİYE LİSTESİ -->
@@ -577,7 +591,7 @@
                 <span class="live-title">🔴 Canlı Ortak İrsaliyeler</span>
                 <button class="excel-btn" onclick="exportToCSV('irsaliyeler')">📥 İndir</button>
             </div>
-            <div id="irsaliyeLiveList">Veriler yükleniyor...</div>
+            <div id="irsaliyeLiveList">İnternet bağlantısı bekleniyor...</div>
         </div>
     </div>
 
@@ -784,7 +798,10 @@
         let ir_f = document.getElementById('ir_fabrikaSelect').value;
         if(ir_f === "Diğer") ir_f = document.getElementById('ir_fabrikaOther').value.trim();
 
-        if (!plaka || !ir_f) return alert("Lütfen Plaka ve Fabrika alanlarını doldurun/seçin!");
+        let ir_s = document.getElementById('ir_sahisSelect').value;
+        if(ir_s === "Diğer") ir_s = document.getElementById('ir_sahisOther').value.trim();
+
+        if (!plaka || !ir_f || !ir_s) return alert("Lütfen Plaka, Fabrika ve Şahıs alanlarını doldurun/seçin!");
 
         const fPlaka = formatPlaka(plaka);
 
@@ -799,7 +816,7 @@
             tel: telVal,
             arac: document.getElementById('ir_arac').value,
             fabrika: ir_f,
-            sahis: document.getElementById('ir_sahis').value.trim() || '-',
+            sahis: ir_s,
             tarla: document.getElementById('ir_tarla').value.trim() || '-',
             cihaz: cihazAdiVal
         };
@@ -814,7 +831,11 @@
         document.getElementById('ir_fabrikaSelect').selectedIndex = 0;
         document.getElementById('ir_fabrikaOther').value = '';
         document.getElementById('ir_fabrikaOther').style.display = 'none';
-        document.getElementById('ir_sahis').value = '';
+        
+        document.getElementById('ir_sahisSelect').selectedIndex = 0;
+        document.getElementById('ir_sahisOther').value = '';
+        document.getElementById('ir_sahisOther').style.display = 'none';
+        
         document.getElementById('ir_tarla').value = '';
     }
 
@@ -942,7 +963,7 @@
     }
 
     function formuTemizle() {
-        document.querySelectorAll('input[type="radio"]').forEach(r => r.checked = false);
+        document.querySelectorAll('#plakaTab input[type="radio"]').forEach(r => r.checked = false);
         ['fiyatOther', 'sahisOther', 'fabrikaOther'].forEach(id => {
             const el = document.getElementById(id);
             if(el) { el.value = ''; el.style.display = 'none'; }
