@@ -102,10 +102,10 @@
         }
 
         .card-title {
-            font-size: 15px;
-            font-weight: 700;
-            color: #475569;
-            letter-spacing: 0.5px;
+            font-size: 17px;
+            font-weight: 800;
+            color: #334155;
+            letter-spacing: 0.3px;
             margin-bottom: 10px;
             display: flex;
             align-items: center;
@@ -147,6 +147,22 @@
             display: flex;
             flex-direction: column;
             gap: 8px;
+        }
+
+        /* YAN YANA RADİO SEÇENEKLERİ İÇİN */
+        .radio-group-row {
+            display: flex;
+            flex-direction: row !important;
+            gap: 8px;
+        }
+        .radio-group-row .radio-option {
+            flex: 1;
+            padding: 10px 8px;
+            font-size: 14px;
+            justify-content: center;
+        }
+        .radio-group-row .radio-option input[type="radio"] {
+            margin-right: 6px;
         }
 
         .radio-option {
@@ -445,7 +461,7 @@
 
     <!-- ÜST SEKME MENÜSÜ -->
     <div class="tab-bar">
-        <button class="tab-btn active" type="button" onclick="openTab('plakaTab', this)">🚛 Plaka Girişi</button>
+        <button class="tab-btn active" type="button" onclick="openTab('plakaTab', this)">🚛 Plaka Kayıt</button>
         <button class="tab-btn" type="button" onclick="openTab('irsaliyeTab', this)">📄 İrsaliye</button>
     </div>
 
@@ -518,7 +534,7 @@
                 <span class="live-title">🔴 Canlı Ortak Plaka Kayıtları</span>
                 <button class="excel-btn" onclick="exportToCSV('plakalar')">📥 İndir</button>
             </div>
-            <div id="plakaLiveList">İnternet bağlantısı bekleniyor...</div>
+            <div id="plakaLiveList">Veriler yükleniyor...</div>
         </div>
     </div>
 
@@ -537,14 +553,14 @@
                 <div class="card-title">👨‍✈️ Şoför Bilgileri</div>
                 <div class="field-inputs">
                     <input type="text" id="ir_sofor" placeholder="Adı Soyadı" autocomplete="off">
-                    
                     <input type="tel" id="ir_tel" placeholder="Telefon (5XX - XXX - XXXX)" inputmode="numeric" onfocus="formatTelInput(this)" oninput="formatTelInput(this)" autocomplete="off">
                     
-                    <select id="ir_arac">
-                        <option value="On Tekel">On Tekel</option>
-                        <option value="Kırkayak">Kırkayak</option>
-                        <option value="Tır">Tır</option>
-                    </select>
+                    <!-- ON TEKEL / KIRKAYAK / TIR - ÜÇÜ YAN YANA -->
+                    <div class="radio-group radio-group-row" style="margin-top: 4px;">
+                        <label class="radio-option"><input type="radio" name="ir_arac" value="On Tekel" checked> On Tekel</label>
+                        <label class="radio-option"><input type="radio" name="ir_arac" value="Kırkayak"> Kırkayak</label>
+                        <label class="radio-option"><input type="radio" name="ir_arac" value="Tır"> Tır</label>
+                    </div>
                 </div>
             </div>
 
@@ -559,6 +575,15 @@
                         <option value="Diğer">Diğer</option>
                     </select>
                     <input type="text" id="ir_fabrikaOther" class="other-input" placeholder="Fabrika adını yazın..." autocomplete="off">
+                </div>
+            </div>
+
+            <!-- FİYAT TÜRÜ (SÖZLEŞMELİ / SERBEST) - YAN YANA -->
+            <div class="card">
+                <div class="card-title">💰 Fiyat Türü</div>
+                <div class="radio-group radio-group-row">
+                    <label class="radio-option"><input type="radio" name="ir_fiyatTur" value="Sözleşmeli"> Sözleşmeli</label>
+                    <label class="radio-option"><input type="radio" name="ir_fiyatTur" value="Serbest"> Serbest</label>
                 </div>
             </div>
 
@@ -591,7 +616,7 @@
                 <span class="live-title">🔴 Canlı Ortak İrsaliyeler</span>
                 <button class="excel-btn" onclick="exportToCSV('irsaliyeler')">📥 İndir</button>
             </div>
-            <div id="irsaliyeLiveList">İnternet bağlantısı bekleniyor...</div>
+            <div id="irsaliyeLiveList">Veriler yükleniyor...</div>
         </div>
     </div>
 
@@ -801,6 +826,9 @@
         let ir_s = document.getElementById('ir_sahisSelect').value;
         if(ir_s === "Diğer") ir_s = document.getElementById('ir_sahisOther').value.trim();
 
+        let ir_ft = document.querySelector('input[name="ir_fiyatTur"]:checked')?.value || '-';
+        let ir_aracVal = document.querySelector('input[name="ir_arac"]:checked')?.value || 'On Tekel';
+
         if (!plaka || !ir_f || !ir_s) return alert("Lütfen Plaka, Fabrika ve Şahıs alanlarını doldurun/seçin!");
 
         const fPlaka = formatPlaka(plaka);
@@ -814,10 +842,11 @@
             plaka: fPlaka,
             sofor: document.getElementById('ir_sofor').value.trim() || '-',
             tel: telVal,
-            arac: document.getElementById('ir_arac').value,
+            arac: ir_aracVal,
             fabrika: ir_f,
             sahis: ir_s,
             tarla: document.getElementById('ir_tarla').value.trim() || '-',
+            fiyatTur: ir_ft,
             cihaz: cihazAdiVal
         };
 
@@ -837,6 +866,7 @@
         document.getElementById('ir_sahisOther').style.display = 'none';
         
         document.getElementById('ir_tarla').value = '';
+        document.querySelectorAll('input[name="ir_fiyatTur"]').forEach(r => r.checked = false);
     }
 
     /* CANLI DİNLEME */
@@ -918,6 +948,7 @@
                         <div class="record-details">
                             <span class="chip chip-sahis">👤 Şahıs: ${item.sahis}</span>
                             <span class="chip chip-fabrika">🏭 Fabrika: ${item.fabrika}</span>
+                            <span class="chip chip-fiyat">💰 ${item.fiyatTur || '-'}</span>
                             ${item.sofor && item.sofor !== '-' ? `<span class="chip chip-sofor">👨‍✈️ Şoför: ${item.sofor}</span>` : ''}
                             ${item.tel && item.tel !== '-' ? `<a href="tel:${telArama}" class="chip chip-tel">📞 ${item.tel}</a>` : ''}
                             ${item.tarla && item.tarla !== '-' ? `<span class="chip chip-tarla">🌾 Tarla/Not: ${item.tarla}</span>` : ''}
@@ -942,13 +973,13 @@
 
         let csvContent = tip === 'plakalar' 
             ? "\uFEFFTarih;Saat;Plaka;Kilo;Fiyat;Fabrika;Şahıs;Tarla;Not;Cihaz\n"
-            : "\uFEFFTarih;Saat;Plaka;Fabrika;Şahıs;Şoför;Telefon;Tarla/Not;Cihaz\n";
+            : "\uFEFFTarih;Saat;Plaka;Fabrika;Şahıs;FiyatTuru;Şoför;Telefon;Tarla/Not;Cihaz\n";
 
         veriler.forEach(item => {
             if(tip === 'plakalar') {
                 csvContent += `"${item.tarih}";"${item.saat}";"${item.plaka}";"${item.kilo}";"${item.fiyat || '-'}";"${item.fabrika}";"${item.sahis}";"${item.tarla || '-'}";"${item.aciklama || '-'}";"${item.cihaz}"\n`;
             } else {
-                csvContent += `"${item.tarih}";"${item.saat}";"${item.plaka}";"${item.fabrika}";"${item.sahis}";"${item.sofor || '-'}";"${item.tel || '-'}";"${item.tarla || '-'}";"${item.cihaz}"\n`;
+                csvContent += `"${item.tarih}";"${item.saat}";"${item.plaka}";"${item.fabrika}";"${item.sahis}";"${item.fiyatTur || '-'}";"${item.sofor || '-'}";"${item.tel || '-'}";"${item.tarla || '-'}";"${item.cihaz}"\n`;
             }
         });
 
