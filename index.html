@@ -649,7 +649,7 @@
     };
 
     // GOOGLE SHEETS / APPS SCRIPT LİNKİNİZ
-    const APPS_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbwEzVv1aLSTqAk82KeueG0lL5cj832rdL7PCToXKTSHFC0PlKup5C7K-3xAouq6oO9dUg/exec";
+    const APPS_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbz4hRkX4axvjwZUYe90Fpo2OUUUogMInTQrCO4GzDMsTIgOsIbZs9-RJ4NgSjoVTCePBQ/exec";
 
     firebase.initializeApp(firebaseConfig);
     const db = firebase.database();
@@ -744,7 +744,7 @@
         setTimeout(() => toast.classList.remove('show'), 1500);
     }
 
-    /* PLAKA KAYDET (HEM FIREBASE HEM GOOGLE SHEETS) */
+  /* PLAKA KAYDET (HEM FIREBASE HEM GOOGLE SHEETS) */
     function plakaKaydetHemFirebaseHemSheet() {
         const cihazAdiVal = localStorage.getItem('cihazAdi') || 'Bilinmeyen Cihaz';
         
@@ -773,15 +773,16 @@
             if (pVal) {
                 let fPlaka = formatPlaka(pVal);
                 
+                // DOĞRU VE NET ANAHTARLAR (Şahıs doğrudan 'sahis' olarak gidiyor)
                 const veri = {
                     tarih: document.getElementById('tarih').value.split('-').reverse().join('.'),
-                    ad: fPlaka,
-                    miktar: s,
-                    turu: f,
+                    plaka: fPlaka,
+                    sahis: s,
+                    fabrika: f,
                     kilo: kVal,
                     fiyat: fsn,
-                    toplam: document.getElementById('tarla').value.trim() || '-',
-                    adet: document.getElementById('aciklama').value.trim() || '-',
+                    tarla: document.getElementById('tarla').value.trim() || '-',
+                    aciklama: document.getElementById('aciklama').value.trim() || '-',
                     cihaz: cihazAdiVal
                 };
 
@@ -789,13 +790,13 @@
                 db.ref('plaka_kayitlari').push({
                     tarih: veri.tarih,
                     saat: new Date().toLocaleTimeString('tr-TR', { hour: '2-digit', minute: '2-digit' }),
-                    plaka: veri.ad,
-                    sahis: veri.miktar,
-                    fabrika: veri.turu,
+                    plaka: veri.plaka,
+                    sahis: veri.sahis,
+                    fabrika: veri.fabrika,
                     kilo: veri.kilo,
                     fiyat: veri.fiyat,
-                    tarla: veri.toplam,
-                    aciklama: veri.adet,
+                    tarla: veri.tarla,
+                    aciklama: veri.aciklama,
                     cihaz: veri.cihaz
                 });
 
